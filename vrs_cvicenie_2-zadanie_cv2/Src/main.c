@@ -79,26 +79,23 @@ int main(void)
   {
 
 
-	  if(!BUTTON_GET_STATE(3))
-	  {
-		  // 0.25s delay
-		  LL_mDelay(250);
-		  LED_ON(4);
-		  // 0.25s delay
-		  LL_mDelay(250);
-		  LED_OFF(4);
-	  }
-	  else
-	  {
-		  // 1s delay
-		  LL_mDelay(1000);
-		  LED_ON(4);
-		  // 1s delay
-		  LL_mDelay(1000);
-		  LED_OFF(4);
-	  }
-
-  }
+      switch (edgeDetect((BUTTON_GET_STATE(3)), 5))
+      {
+          case NONE:
+          {
+    		  LED_OFF(4);
+    		  break;
+          }
+          case FALL:
+          {
+    		  LED_ON(4);
+    		  break;
+          }
+          default:
+          {
+              break;
+          }
+      }
 
 }
 
