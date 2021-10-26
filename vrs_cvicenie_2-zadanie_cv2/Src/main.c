@@ -1,7 +1,32 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "assignment.h"
+#include <stddef.h>
+#include "stm32f3xx_it.h"
 
+
+enum EDGE_TYPE edgeDetect(uint8_t pin, uint8_t samples)
+{
+	 static uint8_t count_low=0;
+	 static enum EDGE_TYPE edge_type;
+	 edge_type = NONE;
+
+	  if(!(pin))
+	  {	 
+		  count_low++;
+		  if(count_low >= samples)
+		  	  {
+			  	  edge_type = FALL;
+			  	  count_low=0;
+		  	  }
+		  else
+		  {
+			  edge_type = NONE;
+		  }
+	  }
+
+	  return edge_type;
+}
 int main(void)
 {
   /*
