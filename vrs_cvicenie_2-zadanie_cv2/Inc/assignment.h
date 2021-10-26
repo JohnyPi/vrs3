@@ -8,6 +8,7 @@
 #ifndef ASSIGNMENT_H_
 #define ASSIGNMENT_H_
 
+enum EDGE_TYPE {NONE , RISE , FALL };
 /**
  * 		This header file provides macros to the MCU's registers required for this assignment.
  * 		Your task is to provide their actual implementation so you can use them in application in "main.c"
