@@ -5,8 +5,10 @@
 #include "stm32f3xx_it.h"
 
 
+
 enum EDGE_TYPE edgeDetect(uint8_t pin, uint8_t samples)
 {
+	 static uint8_t count_hi=0;
 	 static uint8_t count_low=0;
 	 static enum EDGE_TYPE edge_type;
 	 edge_type = NONE;
@@ -25,8 +27,24 @@ enum EDGE_TYPE edgeDetect(uint8_t pin, uint8_t samples)
 		  }
 	  }
 
+
+	  if(pin)
+	  {   
+		  count_hi++;
+		  if(count_hi >= samples)
+		  	  {
+			  	  edge_type = RISE;
+			  	  count_hi= 0;
+		  	  }
+		  else
+		  {
+			  edge_type = NONE;
+		  }
+	  }
+
 	  return edge_type;
 }
+
 int main(void)
 {
   /*
@@ -70,6 +88,7 @@ int main(void)
   /*GPIO PUPDR register, reset*/
   //Set pull up for GPIOA pin 3 (input)
   GPIOA_PUPDR_REG |= (1 << 6);
+  //GPIOA_PUPDR_REG |= (0x2 << 6);
   //Set no pull for GPIOA pin 4
   GPIOA_PUPDR_REG &=~ (0x3 << 8);
   //GPIOA_PUPDR_REG = (1 << 8);
@@ -86,6 +105,11 @@ int main(void)
     		  LED_OFF(4);
     		  break;
           }
+          case RISE:
+          {
+        	  //LED_ON(4);
+              break;
+          }
           case FALL:
           {
     		  LED_ON(4);
@@ -96,6 +120,7 @@ int main(void)
               break;
           }
       }
+  }
 
 }
 
@@ -114,6 +139,7 @@ void Error_Handler(void)
 
   /* USER CODE END Error_Handler_Debug */
 }
+
 
 #ifdef  USE_FULL_ASSERT
 /**
