@@ -14,7 +14,7 @@ enum EDGE_TYPE edgeDetect(uint8_t pin, uint8_t samples)
 	 edge_type = NONE;
 
 	  if(!(pin))
-	  {	 
+	  {	  count_hi= 0;
 		  count_low++;
 		  if(count_low >= samples)
 		  	  {
@@ -29,7 +29,7 @@ enum EDGE_TYPE edgeDetect(uint8_t pin, uint8_t samples)
 
 
 	  if(pin)
-	  {   
+	  {   	  count_low= 0;
 		  count_hi++;
 		  if(count_hi >= samples)
 		  	  {
